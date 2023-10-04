@@ -16,13 +16,21 @@ function createTask(name) {
 function addTask(task) {
     var before = $("#tasksPlace").html();
 
-    var taskHtml = `        
-    <div class="task">
-        <input type="checkbox" name="${task.guid}" id="${task.guid}">
-        <label for="${task.guid}">${task.name}</label>
-    </div>`;
+    var taskHtml = `
+    <label class="task" for="${task.guid}">        
+        <input type="checkbox" onClick="toggleTaskDoneStatus('${task.guid}')" name="${task.guid}" id="${task.guid}" ${task.done ? 'checked=true' : null}">
+        <label for="${task.guid}">${task.name}
+    </label>`;
 
     $("#tasksPlace").html(before + taskHtml);
+}
+
+function toggleTaskDoneStatus(taskId) {
+    var data = getStatus();
+    var task = data.tasks.find(task => task.guid === taskId);
+    task.done = !task.done;
+
+    saveStatus(data);
 }
 
 function saveStatus(status) {
@@ -40,39 +48,22 @@ function getStatus() {
 function start() {
     var data = getStatus();
 
-    for(var d of data.tasks) {
+    for (var d of data.tasks) {
         addTask(d);
     }
 }
 
 function uuid() {
-
-    // Retorna um número randômico entre 0 e 15.
     function randomDigit() {
-
-        // Se o browser tiver suporte às bibliotecas de criptografia, utilize-as;
         if (crypto && crypto.getRandomValues) {
-
-            // Cria um array contendo 1 byte:
             var rands = new Uint8Array(1);
-
-            // Popula o array com valores randômicos
             crypto.getRandomValues(rands);
 
-            // Retorna o módulo 16 do único valor presente (%16) em formato hexadecimal
             return (rands[0] % 16).toString(16);
         } else {
-            // Caso não, utilize random(), que pode ocasionar em colisões (mesmos valores
-            // gerados mais frequentemente):
             return ((Math.random() * 16) | 0).toString(16);
         }
     }
-
-    // A função pode utilizar a biblioteca de criptografia padrão, ou
-    // msCrypto se utilizando um browser da Microsoft anterior à integração.
     var crypto = window.crypto || window.msCrypto;
-
-    // para cada caracter [x] na string abaixo um valor hexadecimal é gerado via
-    // replace:
     return 'xxxxxxxx-xxxx-4xxx-8xxx-xxxxxxxxxxxx'.replace(/x/g, randomDigit);
 }
