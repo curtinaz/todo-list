@@ -80,11 +80,15 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    ...
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Título da tarefa</label>
+                        <input type="email" class="form-control" id="taskTitle">
+                        <div id="emailHelp" class="form-text">Você poderá mudar isto depois.</div>
+                    </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Understood</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" id="createTaskSubmit">Criar</button>
                 </div>
             </div>
         </div>
@@ -100,6 +104,15 @@
             }
 
             start();
+        });
+
+        $("#createTaskSubmit").click(() => {
+
+            var taskTitle = $("#taskTitle").val();
+            createTask(taskTitle)
+            $("#taskTitle").val("");
+            $("#createTask").modal('hide');
+
         });
 
     </script>
