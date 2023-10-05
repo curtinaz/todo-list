@@ -10,7 +10,7 @@ function createWindow() {
     },
   });
 
-  win.loadFile('../index.html'); // Carrega o arquivo HTML na WebView.
+  win.loadFile('index.html'); // Carrega o arquivo HTML na WebView.
 }
 
 app.whenReady().then(createWindow);
