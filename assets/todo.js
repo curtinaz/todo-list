@@ -22,7 +22,7 @@ function addTask(task) {
             <input type="checkbox" onClick="toggleTaskDoneStatus('${task.guid}')" name="${task.guid}" id="${task.guid}" ${task.done ? 'checked=true' : null}">
             <label for="${task.guid}">${task.name}</label>
         </div>
-        <button class="taskButtons" class="btn btn-primary" data-bs-toggle="modal" onClick="preDeleteTask('${task.guid}')" data-bs-target="#removeTaskModal"><box-icon name='trash'></box-icon></button>
+        <button class="taskButtons" class="btn btn-primary" data-bs-toggle="modal" onClick="preDeleteTask('${task.guid}')" data-bs-target="#removeTaskModal"><i class='bx bx-trash'></i></button>
     </label>`;
     // onClick="deleteTask('${task.guid}'
     $("#tasksPlace").html(before + taskHtml);
