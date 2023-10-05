@@ -17,9 +17,12 @@ function addTask(task) {
     var before = $("#tasksPlace").html();
 
     var taskHtml = `
-    <label class="task" for="${task.guid}">        
-        <input type="checkbox" onClick="toggleTaskDoneStatus('${task.guid}')" name="${task.guid}" id="${task.guid}" ${task.done ? 'checked=true' : null}">
-        <label for="${task.guid}">${task.name}
+    <label class="task" for="${task.guid}">
+        <div class="taskInfos">        
+            <input type="checkbox" onClick="toggleTaskDoneStatus('${task.guid}')" name="${task.guid}" id="${task.guid}" ${task.done ? 'checked=true' : null}">
+            <label for="${task.guid}">${task.name}</label>
+        </div>
+            <button class="taskButtons"><box-icon name='trash'></box-icon></button>
     </label>`;
 
     $("#tasksPlace").html(before + taskHtml);
