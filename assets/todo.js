@@ -17,12 +17,12 @@ function addTask(task) {
     var before = $("#tasksPlace").html();
 
     var taskHtml = `
-    <label class="task" for="${task.guid}">
+    <label class="task" for="${task.guid}" id="task-${task.guid}">
         <div class="taskInfos">        
             <input type="checkbox" onClick="toggleTaskDoneStatus('${task.guid}')" name="${task.guid}" id="${task.guid}" ${task.done ? 'checked=true' : null}">
             <label for="${task.guid}">${task.name}</label>
         </div>
-            <button class="taskButtons"><box-icon name='trash'></box-icon></button>
+        <button class="taskButtons" onClick="deleteTask('${task.guid}')"><box-icon name='trash'></box-icon></button>
     </label>`;
 
     $("#tasksPlace").html(before + taskHtml);
@@ -32,6 +32,15 @@ function toggleTaskDoneStatus(taskId) {
     var data = getStatus();
     var task = data.tasks.find(task => task.guid === taskId);
     task.done = !task.done;
+
+    saveStatus(data);
+}
+
+function deleteTask(taskId) {
+    var data = getStatus();
+    data.tasks = data.tasks.filter(task => task.guid !== taskId);
+    
+    $(`#task-${taskId}`).remove();
 
     saveStatus(data);
 }
