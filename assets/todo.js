@@ -22,9 +22,9 @@ function addTask(task) {
             <input type="checkbox" onClick="toggleTaskDoneStatus('${task.guid}')" name="${task.guid}" id="${task.guid}" ${task.done ? 'checked=true' : null}">
             <label for="${task.guid}">${task.name}</label>
         </div>
-        <button class="taskButtons" onClick="deleteTask('${task.guid}')"><box-icon name='trash'></box-icon></button>
+        <button class="taskButtons" class="btn btn-primary" data-bs-toggle="modal" onClick="preDeleteTask('${task.guid}')" data-bs-target="#removeTaskModal"><box-icon name='trash'></box-icon></button>
     </label>`;
-
+    // onClick="deleteTask('${task.guid}'
     $("#tasksPlace").html(before + taskHtml);
 }
 
@@ -34,6 +34,16 @@ function toggleTaskDoneStatus(taskId) {
     task.done = !task.done;
 
     saveStatus(data);
+}
+
+function preDeleteTask(taskId) {
+    var data = getStatus();
+    var task = data.tasks.find(task => task.guid === taskId);
+
+    console.log('preDeleting ' + taskId);
+
+    $("#removingTaskName").text(task.name + '?');
+    $("#removingTaskSubmitButton").attr('onClick', `deleteTask('${taskId}')`)
 }
 
 function deleteTask(taskId) {
