@@ -5,12 +5,11 @@ function createTask(name) {
         done: false
     }
 
-    addTask(task);
-
     var data = getStatus();
     data.tasks.push(task);
 
     saveStatus(data);
+    refresh();
 }
 
 function addTask(task) {
@@ -65,6 +64,11 @@ function getStatus() {
     }
 
     return JSON.parse(window.localStorage.getItem('todoData'));
+}
+
+function refresh() {
+    $("#tasksPlace").html("");
+    start();
 }
 
 function start() {
