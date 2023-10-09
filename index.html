@@ -16,59 +16,8 @@
     <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <script src="./assets/todo.js"></script>
+    <link rel="stylesheet" href="./assets/styles.css">
 </head>
-
-<style>
-    * {
-        border: 0;
-        margin: 0;
-        padding: 0;
-    }
-
-    body {
-        background-color: rgb(236, 236, 236);
-    }
-
-    section {
-        margin: 0px 60px;
-    }
-
-    .task {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        border-radius: 8px;
-        background-color: rgba(179, 184, 189, 0.384);
-    }
-
-    .taskInfos {
-        padding: 16px;
-        display: flex;
-        align-items: center;
-        user-select: none;
-    }
-
-    .task+.task {
-        margin-top: 8px;
-    }
-
-    .task input[type='checkbox'] {
-        margin-right: 8px;
-        width: 20px;
-        height: 20px;
-    }
-
-    .taskButtons {
-        margin-right: 16px;
-        background-color: rgba(0, 0, 0, 0);
-    }
-
-    header {
-        margin: 30px 60px;
-        display: flex;
-        justify-content: space-between;
-    }
-</style>
 
 <body>
 
@@ -107,8 +56,34 @@
         </div>
     </div>
 
+    <!-- Edit Task Modal -->
+    <div class="modal fade" id="editTask" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="editTaskLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editTaskLabel">Editar tarefa</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Título da tarefa</label>
+                        <input type="email" class="form-control" id="editingTaskTitle">
+                        <div id="emailHelp" class="form-text">Você poderá mudar isto depois.</div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
+                        id="editTaskSubmit">Editar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Remove Task Modal -->
-    <div class="modal fade" id="removeTaskModal" tabindex="-1" aria-labelledby="removeTaskModalLabel" aria-hidden="true">
+    <div class="modal fade" id="removeTaskModal" tabindex="-1" aria-labelledby="removeTaskModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -119,8 +94,9 @@
                     Você realmente deseja remover a tarefa: <strong id="removingTaskName"></strong>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="removingTaskSubmitButton">Remover</button>
+                    <button type="button" class="action btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="action btn btn-primary" data-bs-dismiss="modal"
+                        id="removingTaskSubmitButton">Remover</button>
                 </div>
             </div>
         </div>
@@ -139,13 +115,18 @@
         });
 
         $("#createTaskSubmit").click(() => {
-
             var taskTitle = $("#taskTitle").val();
             createTask(taskTitle)
             $("#taskTitle").val("");
             $("#createTask").modal('hide');
-
         });
+
+        // $("#editTaskSubmit").click(() => {
+        //     var taskTitle = $("#editingTaskTitle").val();
+        //     editTask(taskTitle)
+        //     $("#editingTaskTitle").val("");
+        //     $("#createTask").modal('hide');
+        // });
 
     </script>
 </body>

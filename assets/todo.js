@@ -19,9 +19,12 @@ function addTask(task) {
     <label class="task" for="${task.guid}" id="task-${task.guid}">
         <div class="taskInfos">        
             <input type="checkbox" onClick="toggleTaskDoneStatus('${task.guid}')" name="${task.guid}" id="${task.guid}" ${task.done ? 'checked=true' : null}">
-            <label for="${task.guid}">${task.name}</label>
+            <label class="oneline" title="${task.name}" for="${task.guid}">${task.name}</label>
         </div>
-        <button class="taskButtons" class="btn btn-primary" data-bs-toggle="modal" onClick="preDeleteTask('${task.guid}')" data-bs-target="#removeTaskModal"><i class='bx bx-trash'></i></button>
+        <div>
+            <button class="taskButtons" class="btn btn-primary" data-bs-toggle="modal" onClick="preEditTask('${task.guid}')" data-bs-target="#editTask"><i class='action bx bx-edit'></i></button>
+            <button class="taskButtons" class="btn btn-primary" data-bs-toggle="modal" onClick="preDeleteTask('${task.guid}')" data-bs-target="#removeTaskModal"><i class='action bx bx-trash'></i></button>
+        </div>
     </label>`;
     // onClick="deleteTask('${task.guid}'
     $("#tasksPlace").html(before + taskHtml);
@@ -35,6 +38,16 @@ function toggleTaskDoneStatus(taskId) {
     saveStatus(data);
 }
 
+function preEditTask(taskId) {
+    var data = getStatus();
+    var task = data.tasks.find(task => task.guid === taskId);
+
+    console.log('preEditing ' + taskId);
+
+    $("#editingTaskTitle").val(task.name);
+    $("#editTaskSubmit").attr('onClick', `editTask('${taskId}')`)
+}
+
 function preDeleteTask(taskId) {
     var data = getStatus();
     var task = data.tasks.find(task => task.guid === taskId);
@@ -43,6 +56,14 @@ function preDeleteTask(taskId) {
 
     $("#removingTaskName").text(task.name + '?');
     $("#removingTaskSubmitButton").attr('onClick', `deleteTask('${taskId}')`)
+}
+
+function editTask(taskId) {
+    var data = getStatus();
+    var task = data.tasks.find(task => task.guid === taskId);
+    task.name = $("#editingTaskTitle").val();
+    saveStatus(data);
+    refresh();
 }
 
 function deleteTask(taskId) {
