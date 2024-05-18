@@ -42,6 +42,8 @@ function preEditTask(taskId) {
     var data = getStatus();
     var task = data.tasks.find(task => task.guid === taskId);
 
+    focusOnInput('editingTaskTitle');
+
     console.log('preEditing ' + taskId);
 
     $("#editingTaskTitle").val(task.name);
@@ -69,7 +71,7 @@ function editTask(taskId) {
 function deleteTask(taskId) {
     var data = getStatus();
     data.tasks = data.tasks.filter(task => task.guid !== taskId);
-    
+
     $(`#task-${taskId}`).remove();
 
     saveStatus(data);
@@ -114,3 +116,25 @@ function uuid() {
     var crypto = window.crypto || window.msCrypto;
     return 'xxxxxxxx-xxxx-4xxx-8xxx-xxxxxxxxxxxx'.replace(/x/g, randomDigit);
 }
+
+function focusOnInput(input) {
+    if (input != 'taskTitle' && input != 'editingTaskTitle') return;
+
+    setTimeout(function () {
+        $(`#${input}`).focus()
+    }, 500);
+}
+
+$(document).ready(function() {
+    $("#taskTitle").on('keypress', function (e) {
+        if (e.which == 13) {
+            $("#createTaskSubmit").click();
+        }
+    });
+
+    $("#editingTaskTitle").on('keypress', function (e) {
+        if (e.which == 13) {
+            $("#editTaskSubmit").click();
+        }
+    });
+});
